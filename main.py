@@ -100,7 +100,5 @@ def saveToFile(tree, destination):
     f.close()
     printTree(tree[0])
 
-
-
 tree = buildTree(inputFile)
 saveToFile(tree, outputFile)
