@@ -1,6 +1,7 @@
 inputFile = "input.txt"
 outputFile = "output.txt"
 
+
 class Tree:
     def __init__(self, amount, letter, leftChild=None, rightChild=None):
         self.amount = amount
@@ -8,6 +9,7 @@ class Tree:
         self.leftChild = leftChild
         self.rightChild = rightChild
         self.code = ''
+
 
 def printTree(leaf, value=''):
     f = open("output.txt", 'a')
@@ -17,8 +19,7 @@ def printTree(leaf, value=''):
         printTree(leaf.leftChild, newCode)
     if leaf.rightChild:
         printTree(leaf.rightChild, newCode)
-    if not leaf.leftChild and not leaf.rightChild:
-        f.writelines(leaf.letter + " -> " + newCode + "\n")
+
 
 def buildTree(file):
     occurs = amount(file)
@@ -70,6 +71,7 @@ def HeapSort(tab):
         tab[i], tab[0] = tab[0], tab[i]
         heapify(tab, 0, i)
 
+
 def amount(file):
     txt = open(file, 'r').read()
     dict = {}
@@ -93,12 +95,12 @@ def encrypt(leaf, str, txt):
 
 
 def saveToFile(tree, destination):
-    f = open(destination, 'w')
-    f.writelines("Word: " + open("input.txt", 'r').read() + "\n")
-    f.writelines("Code: " + encrypt(tree[0], "", open("input.txt", 'r').read()) + "\n")
-    f.writelines("\nChar | Huffman code \n")
+    f = open(destination, 'wb')
+    str = encrypt(tree[0], "", open("input.txt", 'r').read())
+    f.write(bytearray(int(str[x: x + 8], 2) for x in range(0, len(str), 8)))
     f.close()
     printTree(tree[0])
+
 
 tree = buildTree(inputFile)
 saveToFile(tree, outputFile)
